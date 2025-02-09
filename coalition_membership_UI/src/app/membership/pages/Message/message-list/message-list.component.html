@@ -1,0 +1,119 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> Membership</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Messages </a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Message List
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+
+
+    <div class="col-md-12 p-4 ">
+        <div class="row mt-2">
+            <div class="col-12 text-end" *ngIf="userView.role.includes('SuperAdmin')">
+
+                <button class="btn btn-sm btn-outline-primary text-end" (click)="addMessage()">
+                    <i class="bi bi-plust"></i> Add Message </button>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-3">
+                <div class="form-floating mb-3">
+
+                    <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
+                        [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
+
+                    <label for="floatingInput">Filter :</label>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="form-floating mb-3">
+
+                    <select class="form-control" [(ngModel)]="isApproved" (change)="getMessages()">
+
+                        <option [value]="true">Approved</option>
+                        <option [value]="false">Not Approved</option>
+
+                    </select>
+                    <label for="floatingInput">Message Status</label>
+                </div>
+            </div>
+
+        </div>
+
+
+        <table class="custom-table mt-4">
+            <thead>
+                <tr>
+
+                    <th>Message Content</th>
+                    <th>Message Type</th>
+                    <th>Is Approved </th>
+
+                    <th *ngIf="userView.role.includes('SuperAdmin')">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let item of eventMessages">
+                    <td>{{item.content}}</td>
+                    <td>{{item.messageTypeGet}}</td>
+                    <td>
+                        <span *ngIf="item.isApproved" class="badge bg-success rounded-pill">
+                            Approved
+                        </span>
+                        <span *ngIf="!item.isApproved" class="badge bg-danger rounded-pill">
+                            Not Approved
+                        </span>
+                    </td>
+
+                    <td *ngIf="userView.role.includes('SuperAdmin')">
+
+                        <div *ngIf="!item.isApproved">
+                            <button type="button" class="btn btn-outline-warning btn-sm me-1"
+                            (click)="updateMessage(item)">
+                            <i class="ti ti-pencil"></i>
+                        </button>
+                      
+                        </div>
+
+                        <div *ngIf="item.isApproved">
+                            <button type="button" class="btn btn-outline-primary btn-sm me-1"
+                            (click)="detailMessage(item)">
+                            <i class="ti ti-eye"></i>
+                        </button>
+                      
+                        </div>
+
+                    </td>
+                </tr>
+
+
+            </tbody>
+
+        </table>
+     
+    </div>
+
+</div>

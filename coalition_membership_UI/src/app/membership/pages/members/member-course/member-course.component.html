@@ -1,0 +1,58 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> Membership</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Members</a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Events
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card p-4">
+
+    <div class="card mt-2" style="background-color: #ecf0f4;">
+
+        <div style="display: flex; justify-content: center;">
+
+            <div class="col-md-12 p-4">
+
+
+                <div class="donation-events-scroll">
+                    <div class="donation-event-card" *ngFor="let event of Course">
+                        <div class="event-image-container">
+                            <img [src]="getImage(event.imagePath)" alt="{{ event.title }}" />
+                        </div>
+                        <div class="event-content">
+                            <h3>{{ event.title }}</h3>
+                            <p *ngIf="event.subTitle">{{ event.subTitle }}</p>
+                            <p>{{ event.description }}</p>
+                            <p *ngIf="event.isDonation">
+                                {{"Amount"}}: {{ event.amount | currency:'ETB ':'symbol-narrow' }}
+                            </p>
+                            <p *ngIf="event.isDonation">
+                                {{"Amount Collected"}}: {{ event.amountCollected | currency:'ETB ':'symbol-narrow' }}
+                            </p>
+                            <button *ngIf="event.isDonation" (click)="onDonate(event)" class="btn btn-outline-primary">{{
+                                'Donate'  }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card flex justify-content-center">
+                    <!-- <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                        [totalRecords]="Course && Course.length" [rowsPerPageOptions]="[3, 6, 9]"></p-paginator> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

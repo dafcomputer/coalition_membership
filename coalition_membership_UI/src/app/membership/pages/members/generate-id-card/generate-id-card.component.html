@@ -1,0 +1,84 @@
+<div class="card p-2">
+  <div class="row" id="card" [hidden]="isMobile">
+    <div class="col-6 " id="front-side" style="margin-bottom: 20px;">
+      <div class="id-card">
+        <div class="header">
+          <img src="../../../../../assets/logo.jpg" alt="Organization Logo">
+          <h2>ABI-ZEER COMMUNITY DEVELOPMENT ORGANIZATION<br><span>
+              አቢዘር ማህበረሰብ አቀፍ የልማት ድርጅት
+            </span></h2>
+        </div>
+
+        <div class="id-card__details">
+          <div class="details-right">
+            <img [src]="imagePath" alt="Member Photo" class="profile-pic">
+          </div>
+          <div class="details-left">
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">ID Number</span>
+              <span class="id-card__detail-value" id="id-card-ID">{{member.memberId}}</span>
+            </div>
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">Name</span>
+              <span class="id-card__detail-value" id="id-card-name">{{member.fullName}}</span>
+            </div>
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">Membership Type</span>
+              <span class="id-card__detail-value" id="id-card-membership-type">{{member.membershipType}}</span>
+            </div>
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">Mobile Number</span>
+              <span class="id-card__detail-value">{{member.phoneNumber}}</span>
+            </div>
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">Issued Date</span>
+              <span class="id-card__detail-value">{{member.lastPaid|date:"dd MMM yyyy"}}</span>
+            </div>
+            <div class="id-card__detail">
+              <span class="id-card__detail-label">Expired Date</span>
+              <span class="id-card__detail-value">{{expiryDate|date:"dd MMM yyyy"}}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="watermark">ABI-ZEER</div>
+        <div class="footer">Authorized by Abi-Zeer Community Development Organization</div>
+      </div>
+    </div>
+    <br/>
+
+    <div class="col-6 page-break" id="back-side" >
+      <div class="id-card text-center">
+        <div class="header" style="width: 100%;">
+          <img src="../../../../../assets/logo.jpg" alt="Organization Logo">
+          <h2>
+
+            <p><strong>Address:</strong> Bisrate Gebriel, in front of Zambia Embassy</p>
+            <p><strong>Email:</strong> abizeerfamily&#64;gmail.com</p>
+            <p><strong>Tel. No.:</strong> +251 911 393 123</p>
+            <p><strong>Authorized Signature:</strong></p>
+          </h2>
+          <qrcode [qrdata]="member.memberId" style="border-radius: 20px;" [width]="90" [errorCorrectionLevel]="'M'"
+            [colorDark]="'#09653a'" [colorLight]="'#ffffff'">
+          </qrcode>
+        </div>
+
+        <div style="position: relative;">
+          <img src="../../../../../assets/Signiture.png" alt="Signature"
+            style="width: 120px;transform: rotate(-20deg);">
+          <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;margin-top: -50px;">
+            <img src="../../../../../assets/stamp.png" alt="Stamp"
+              style="width: 200px; opacity: 0.6; margin-top: 10px;">
+            <img src="../../../../../assets/stamp2.png" alt="Stamp" style="width: 345px;transform: rotate(-40deg)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-4 mt-4">
+    <button class=" btn btn-outline-success" id="download-button" (click)="generatePdf()">Download Id Card</button>
+
+  </div>
+</div>

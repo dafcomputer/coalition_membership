@@ -1,0 +1,163 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3 row justify-content-between align-items-center">
+    <!-- Registration Form Section -->
+    <div class="auth-form col-lg-7 col-md-7 col-sm-12">
+      <div class="card my-3 shadow-lg border-0 rounded-lg" style="max-width: 800px;">
+        <div class="card-body p-5">
+          <!-- Header -->
+          <div class="text-center mb-4">
+            <h2 class="text-primary mb-3 display-6"><strong> {{'Join_Abizeer_Community'|translate}}</strong></h2>
+            <p class="fs-5 text-muted">{{'Fill_Information_Below'|translate}}</p>
+            <hr />
+          </div>
+
+          <!-- Registration Form -->
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="row mb-3">
+              <div class="col-md-4 mt-2">
+                <div class="form-floating">
+                  <input type="text" class="form-control " id="firstName" formControlName="firstName"
+                    placeholder="First Name" />
+                  <label for="firstName">{{'First_Name'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-floating">
+                  <input type="text" class="form-control " id="lastName" formControlName="lastName"
+                    placeholder="Last Name" />
+                  <label for="lastName">{{'Last_Name'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-floating">
+                  <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="['et']"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                    [searchCountryField]="[
+                    SearchCountryField.Iso2,
+                    SearchCountryField.Name
+                  ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Ethiopia" [maxLength]="15"
+                    [phoneValidation]="true" [separateDialCode]="true" [numberFormat]="PhoneNumberFormat.National"
+                    (change)="checkIfPhoneNumberExist()" formControlName="phoneNumber">
+                  </ngx-intl-tel-input>
+
+                  <!-- Validation Messages -->
+                  <div
+                    *ngIf="registerForm.controls['phoneNumber'].invalid && (registerForm.controls['phoneNumber'].touched || registerForm.controls['phoneNumber'].dirty)"
+                    class="text-danger mt-2">
+                    <small *ngIf="registerForm.controls['phoneNumber'].hasError('required')">
+                     {{'Phone_Number_Required'|translate}}
+                    </small>
+                    <small *ngIf="registerForm.controls['phoneNumber'].hasError('validatePhoneNumber')">
+                      {{'Enter_Valid_Phone'|translate}}
+                    </small>
+                    <small *ngIf="registerForm.controls['phoneNumber'].hasError('maxlength')">
+                     {{'Phone_Max_Length'|translate}}
+                    </small>
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4 mt-2">
+                <div class="form-floating">
+                  <input type="email" class="form-control " id="email" formControlName="email"
+                    placeholder="Email Address" />
+                  <label for="email">{{'Email_Address'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-floating mb-3">
+
+                  <select class="form-control" #category (change)="getMemberships(category.value)">
+                    <option></option>
+                    <option value=0>{{'Weekly'|translate}}</option>
+                    <option value=1>{{'Monthly'|translate}}</option>
+                    <option value=2>{{'Yearly'|translate}}</option>
+
+                  </select>
+                  <label for="email">{{'Membership_Category'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-floating">
+                  <select class="form-control " formControlName="membershipType">
+                    <option></option>
+                    <option *ngFor="let item of memberships" [value]="item.id">{{ item.name }}</option>
+                  </select>
+                  <label for="membershipType">{{'Membership_Type'|translate}}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3 ">
+              <!-- <div class="col-md-3 mt-2">
+                <div class="form-floating mb-3">
+                  <select class="form-control" #country (change)="getRegions(country.value)" required>
+                    <option></option>
+                    <option value="ETHIOPIAN">ETHIOPIAN</option>
+                    <option value="FOREIGN">FOREIGN</option>
+                  </select>
+                  <label for="floatingInput">Country Type</label>
+                </div>
+
+              </div> -->
+              <div class="col-md-3 mt-2">
+                <div class="form-floating">
+                  <select class="form-control " id="region" formControlName="RegionId">
+                    <option value="00000000-0000-0000-0000-000000000000"></option>
+                    <option *ngFor="let item of regions" [value]="item.id">{{ item.name }}</option>
+                  </select>
+                
+                  <label for="region">{{ (countryType === 'ETHIOPIAN' ? 'Regions'  : 'Country' ) |translate }} </label>
+
+
+
+
+
+                </div>
+              </div>
+              <div class="col-md-3 mt-2" *ngIf="countryType==='ETHIOPIAN'">
+                <div class="form-floating">
+                  <input type="text" class="form-control " id="zone"  formControlName="Zone" placeholder="Zone" />
+                  <label for="zone">{{'Zone'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-3 mt-2" *ngIf="countryType==='ETHIOPIAN'">
+                <div class="form-floating">
+                  <input type="text" class="form-control " id="Woreda" formControlName="woreda" placeholder="Woreda" />
+                  <label for="Woreda">{{'Woreda'|translate}}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" [disabled]="!registerForm.valid"
+                class="btn btn-primary btn-lg  shadow-lg">{{'Register'|translate}}</button>
+            </div>
+            <hr />
+            <div class="text-left">
+              <p>{{'Already_Have_Account'|translate}}? <button type="button" class="btn btn-link text-primary fw-bold"
+                  (click)="loginasMember()">{{'Login'|translate}}</button></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Membership Information Section -->
+    <div class="col-md-4 col-sm-12">
+      <div class="member-info text-center p-4 bg-light rounded-lg shadow-lg">
+        <img src="../../../../../assets/logo-transparent.png" alt="Member Image" class="img-fluid bounce-image mb-4"
+          style="max-height: 260px;">
+        <h4 class="animated-heading text-primary">{{'Welcome_Message'|translate}}</h4>
+        <p class="animated-paragraph text-muted mt-3">
+          {{'Join_Community_Description'|translate}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
